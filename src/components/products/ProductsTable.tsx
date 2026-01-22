@@ -22,6 +22,7 @@ interface ProductsTableProps {
   onSort: (field: SortField) => void;
   onEdit: (product: Product) => void;
   onDelete: (product: Product) => void;
+  isAdmin?: boolean;
 }
 
 export const ProductsTable: React.FC<ProductsTableProps> = ({
@@ -31,6 +32,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
   onSort,
   onEdit,
   onDelete,
+  isAdmin = false,
 }) => {
   const formatCurrency = (value: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
@@ -84,7 +86,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
             <TableHead className="text-right">
               <SortableHeader field="stock_quantity">Stock</SortableHeader>
             </TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            {isAdmin && <TableHead className="text-right">Actions</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -119,26 +121,28 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
                     </Badge>
                   </div>
                 </TableCell>
-                <TableCell className="text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onEdit(product)}
-                      className="h-8 w-8"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onDelete(product)}
-                      className="h-8 w-8 text-destructive hover:text-destructive"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </TableCell>
+                {isAdmin && (
+                  <TableCell className="text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onEdit(product)}
+                        className="h-8 w-8"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDelete(product)}
+                        className="h-8 w-8 text-destructive hover:text-destructive"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
