@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, ShieldAlert } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { useProducts, useCategories, Product } from '@/hooks/useInventoryData';
 import { supabase } from '@/integrations/supabase/client';
@@ -18,6 +19,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ProductsTable, SortField, SortDirection } from '@/components/products/ProductsTable';
 import { ProductFormDialog } from '@/components/products/ProductFormDialog';
 import { DeleteProductDialog } from '@/components/products/DeleteProductDialog';
+import { useUserRole } from '@/hooks/useUserRole';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -26,6 +28,7 @@ export default function Products() {
   const queryClient = useQueryClient();
   const { data: products, isLoading: productsLoading } = useProducts();
   const { data: categories = [] } = useCategories();
+  const { isAdmin, isLoading: roleLoading } = useUserRole();
 
   // State
   const [searchQuery, setSearchQuery] = useState('');
@@ -199,7 +202,7 @@ export default function Products() {
     }
   };
 
-  if (productsLoading) {
+  if (productsLoading || roleLoading) {
     return (
       <DashboardLayout title="Products" subtitle="Manage your inventory">
         <div className="space-y-4">
@@ -212,6 +215,16 @@ export default function Products() {
 
   return (
     <DashboardLayout title="Products" subtitle="Manage your inventory">
+      {/* Admin-only notice */}
+      {!isAdmin && (
+        <Alert className="mb-6">
+          <ShieldAlert className="h-4 w-4" />
+          <AlertDescription>
+            You have read-only access. Contact an administrator to manage products.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-4 flex-1">
@@ -247,10 +260,12 @@ export default function Products() {
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleAddProduct} className="gap-2">
-          <Plus className="w-4 h-4" />
-          Add Product
-        </Button>
+        {isAdmin && (
+          <Button onClick={handleAddProduct} className="gap-2">
+            <Plus className="w-4 h-4" />
+            Add Product
+          </Button>
+        )}
       </div>
 
       {/* Table */}
@@ -262,6 +277,7 @@ export default function Products() {
           onSort={handleSort}
           onEdit={handleEditProduct}
           onDelete={handleDeleteProduct}
+          isAdmin={isAdmin}
         />
 
         {/* Pagination */}
