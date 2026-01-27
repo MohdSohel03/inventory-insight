@@ -2,9 +2,13 @@ import React from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { ProfileSettings } from '@/components/settings/ProfileSettings';
 import { AppPreferences } from '@/components/settings/AppPreferences';
+import { UserManagement } from '@/components/settings/UserManagement';
 import { Separator } from '@/components/ui/separator';
+import { useUserRole } from '@/hooks/useUserRole';
 
 const Settings: React.FC = () => {
+  const { isAdmin } = useUserRole();
+
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
@@ -21,6 +25,12 @@ const Settings: React.FC = () => {
             <ProfileSettings />
             <Separator />
             <AppPreferences />
+            {isAdmin && (
+              <>
+                <Separator />
+                <UserManagement />
+              </>
+            )}
           </div>
         </div>
       </main>
