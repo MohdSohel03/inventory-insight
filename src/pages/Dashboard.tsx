@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useProducts, useInventoryStats } from '@/hooks/useInventoryData';
 import { useStockMovements } from '@/hooks/useStockMovements';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Package, 
   DollarSign, 
@@ -15,7 +17,9 @@ import {
   ArrowUpCircle,
   ArrowDownCircle,
   Clock,
-  ChevronRight
+  ChevronRight,
+  Mail,
+  Loader2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
@@ -24,6 +28,29 @@ export default function Dashboard() {
   const { data: products, isLoading: productsLoading } = useProducts();
   const { data: movements, isLoading: movementsLoading } = useStockMovements();
   const stats = useInventoryStats(products);
+  const { toast } = useToast();
+  const [sendingAlert, setSendingAlert] = useState(false);
+
+  const handleSendLowStockAlert = async () => {
+    setSendingAlert(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('low-stock-alert');
+      if (error) throw error;
+      if (data?.success) {
+        toast({ title: 'Alert sent!', description: data.message });
+      } else {
+        throw new Error(data?.error || 'Failed to send alert');
+      }
+    } catch (err: any) {
+      toast({
+        title: 'Failed to send alert',
+        description: err.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setSendingAlert(false);
+    }
+  };
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -245,6 +272,18 @@ export default function Dashboard() {
                 <DollarSign className="w-4 h-4 mr-2" />
                 View Reports
               </Link>
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleSendLowStockAlert}
+              disabled={sendingAlert}
+            >
+              {sendingAlert ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Mail className="w-4 h-4 mr-2" />
+              )}
+              Send Low Stock Alert
             </Button>
           </div>
         </CardContent>
