@@ -34,7 +34,7 @@ export default function Reports() {
   if (productsLoading) {
     return (
       <DashboardLayout title="Reports" subtitle="Inventory analytics and insights">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {[...Array(4)].map((_, i) => (
             <Skeleton key={i} className="h-32 rounded-xl" />
           ))}
