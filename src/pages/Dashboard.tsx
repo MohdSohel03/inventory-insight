@@ -53,9 +53,9 @@ export default function Dashboard() {
   };
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
@@ -97,7 +97,7 @@ export default function Dashboard() {
   return (
     <DashboardLayout title="Dashboard" subtitle="Overview of your inventory">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {productsLoading ? (
           <>
             {[...Array(4)].map((_, i) => (
