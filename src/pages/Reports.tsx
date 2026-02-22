@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Download } from 'lucide-react';
+import { formatCurrency } from '@/utils/currency';
 import { DollarSign, TrendingUp, PiggyBank, AlertTriangle } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { StatCard } from '@/components/dashboard/StatCard';
@@ -29,8 +30,6 @@ export default function Reports() {
   const categoryInventory = useCategoryInventory(products, categories);
   const topProducts = useTopProducts(products, 5);
 
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
 
   if (productsLoading) {
     return (

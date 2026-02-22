@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpDown, Edit, Trash2, AlertTriangle } from 'lucide-react';
+import { formatCurrency } from '@/utils/currency';
 import {
   Table,
   TableBody,
@@ -34,8 +35,6 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
   onDelete,
   isAdmin = false,
 }) => {
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 
   const SortableHeader: React.FC<{ field: SortField; children: React.ReactNode }> = ({
     field,
