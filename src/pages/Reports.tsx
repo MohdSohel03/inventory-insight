@@ -30,7 +30,7 @@ export default function Reports() {
   const topProducts = useTopProducts(products, 5);
 
   const formatCurrency = (value: number) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+    new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
 
   if (productsLoading) {
     return (
@@ -47,7 +47,7 @@ export default function Reports() {
   return (
     <DashboardLayout title="Reports" subtitle="Inventory analytics and insights">
       {/* Stats */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <StatCard
           title="Inventory Value"
           value={formatCurrency(stats.totalValue)}
