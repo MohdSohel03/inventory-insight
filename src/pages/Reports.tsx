@@ -46,7 +46,7 @@ export default function Reports() {
   return (
     <DashboardLayout title="Reports" subtitle="Inventory analytics and insights">
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
         <StatCard
           title="Inventory Value"
           value={formatCurrency(stats.totalValue)}
@@ -75,21 +75,21 @@ export default function Reports() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <ReportFilters
           reportType={reportType}
           onReportTypeChange={setReportType}
           dateRange={dateRange}
           onDateRangeChange={setDateRange}
         />
-        <Button onClick={() => products && exportProductsToCsv(products)} className="gap-2">
+        <Button onClick={() => products && exportProductsToCsv(products)} className="gap-2 w-full sm:w-auto">
           <Download className="w-4 h-4" />
           Export CSV
         </Button>
       </div>
 
       {/* Charts */}
-      <div className="grid gap-6 lg:grid-cols-2 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <InventoryBarChart
           data={categoryInventory}
           dataKey={reportType === 'value' ? 'value' : 'quantity'}
