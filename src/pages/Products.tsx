@@ -226,9 +226,9 @@ export default function Products() {
       )}
 
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="relative w-full max-w-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 flex-1">
+          <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="Search products or SKU..."
@@ -247,7 +247,7 @@ export default function Products() {
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-full sm:w-40">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -261,7 +261,7 @@ export default function Products() {
           </Select>
         </div>
         {isAdmin && (
-          <Button onClick={handleAddProduct} className="gap-2">
+          <Button onClick={handleAddProduct} className="gap-2 w-full sm:w-auto">
             <Plus className="w-4 h-4" />
             Add Product
           </Button>
@@ -282,8 +282,8 @@ export default function Products() {
 
         {/* Pagination */}
         {processedProducts.totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-border">
-            <p className="text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-4 border-t border-border gap-3">
+            <p className="text-sm text-muted-foreground text-center sm:text-left">
               Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{' '}
               {Math.min(currentPage * ITEMS_PER_PAGE, processedProducts.totalItems)} of{' '}
               {processedProducts.totalItems} products
@@ -297,7 +297,7 @@ export default function Products() {
               >
                 Previous
               </Button>
-              <div className="flex items-center gap-1">
+              <div className="hidden sm:flex items-center gap-1">
                 {Array.from({ length: processedProducts.totalPages }, (_, i) => i + 1)
                   .filter(
                     (page) =>
@@ -321,6 +321,9 @@ export default function Products() {
                     </React.Fragment>
                   ))}
               </div>
+              <span className="sm:hidden text-sm text-muted-foreground">
+                {currentPage}/{processedProducts.totalPages}
+              </span>
               <Button
                 variant="outline"
                 size="sm"

@@ -70,13 +70,13 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
             <TableHead>
               <SortableHeader field="name">Product</SortableHeader>
             </TableHead>
-            <TableHead>
+            <TableHead className="hidden sm:table-cell">
               <SortableHeader field="sku">SKU</SortableHeader>
             </TableHead>
-            <TableHead>
+            <TableHead className="hidden md:table-cell">
               <SortableHeader field="category">Category</SortableHeader>
             </TableHead>
-            <TableHead className="text-right">
+            <TableHead className="text-right hidden lg:table-cell">
               <SortableHeader field="cost_price">Cost</SortableHeader>
             </TableHead>
             <TableHead className="text-right">
@@ -94,17 +94,17 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
             return (
               <TableRow key={product.id}>
                 <TableCell className="font-medium">{product.name}</TableCell>
-                <TableCell className="text-muted-foreground">
+                <TableCell className="text-muted-foreground hidden sm:table-cell">
                   {product.sku || '-'}
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden md:table-cell">
                   {product.category?.name ? (
                     <Badge variant="secondary">{product.category.name}</Badge>
                   ) : (
                     <span className="text-muted-foreground">-</span>
                   )}
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right hidden lg:table-cell">
                   {formatCurrency(product.cost_price)}
                 </TableCell>
                 <TableCell className="text-right">
