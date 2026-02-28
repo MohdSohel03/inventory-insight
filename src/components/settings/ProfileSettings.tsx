@@ -188,7 +188,7 @@ export const ProfileSettings: React.FC = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <Avatar className="w-20 h-20">
             <AvatarImage src={profile?.avatar_url || undefined} alt="Profile" />
             <AvatarFallback className="text-lg bg-primary/10 text-primary">
