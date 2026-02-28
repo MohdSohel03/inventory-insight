@@ -104,7 +104,7 @@ export const InventoryTable = ({
         />
       </div>
 
-      <div className="rounded-md border">
+      <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
@@ -119,7 +119,7 @@ export const InventoryTable = ({
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>
+              <TableHead className="hidden md:table-cell">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -137,12 +137,12 @@ export const InventoryTable = ({
                   onClick={() => handleSort('stock_quantity')}
                   className="-ml-3"
                 >
-                  Stock Level
+                  Stock
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="w-[100px]">Actions</TableHead>
+              <TableHead className="hidden sm:table-cell">Status</TableHead>
+              <TableHead className="w-[80px] sm:w-[100px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -169,7 +169,7 @@ export const InventoryTable = ({
                         )}
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden md:table-cell">
                       {product.category?.name || (
                         <span className="text-muted-foreground">-</span>
                       )}
@@ -196,7 +196,7 @@ export const InventoryTable = ({
                         />
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden sm:table-cell">
                       <Badge variant={status.variant}>{status.label}</Badge>
                     </TableCell>
                     <TableCell>
@@ -204,9 +204,10 @@ export const InventoryTable = ({
                         variant="ghost"
                         size="sm"
                         onClick={() => onAdjustStock(product)}
+                        className="px-2 sm:px-3"
                       >
-                        <Edit className="h-4 w-4 mr-1" />
-                        Adjust
+                        <Edit className="h-4 w-4 sm:mr-1" />
+                        <span className="hidden sm:inline">Adjust</span>
                       </Button>
                     </TableCell>
                   </TableRow>
