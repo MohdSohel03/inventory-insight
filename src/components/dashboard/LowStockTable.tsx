@@ -52,8 +52,8 @@ export const LowStockTable: React.FC<LowStockTableProps> = ({ products }) => {
           <TableHeader>
             <TableRow>
               <TableHead>Product</TableHead>
-              <TableHead>SKU</TableHead>
-              <TableHead>Category</TableHead>
+              <TableHead className="hidden sm:table-cell">SKU</TableHead>
+              <TableHead className="hidden md:table-cell">Category</TableHead>
               <TableHead className="text-right">In Stock</TableHead>
               <TableHead className="text-right">Threshold</TableHead>
             </TableRow>
@@ -62,10 +62,10 @@ export const LowStockTable: React.FC<LowStockTableProps> = ({ products }) => {
             {lowStockProducts.slice(0, 5).map((product) => (
               <TableRow key={product.id}>
                 <TableCell className="font-medium">{product.name}</TableCell>
-                <TableCell className="text-muted-foreground">
+                <TableCell className="text-muted-foreground hidden sm:table-cell">
                   {product.sku || '-'}
                 </TableCell>
-                <TableCell>{product.category?.name || 'Uncategorized'}</TableCell>
+                <TableCell className="hidden md:table-cell">{product.category?.name || 'Uncategorized'}</TableCell>
                 <TableCell className="text-right">
                   <Badge
                     variant={

@@ -30,9 +30,9 @@ export const ReportFilters: React.FC<ReportFiltersProps> = ({
   ];
 
   return (
-    <div className="flex flex-wrap items-center gap-6 p-4 bg-card rounded-xl border border-border">
+    <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-4 sm:gap-6 p-4 bg-card rounded-xl border border-border w-full">
       {/* Report Type */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         <span className="text-sm font-medium text-muted-foreground">
           Report Type:
         </span>
@@ -58,7 +58,7 @@ export const ReportFilters: React.FC<ReportFiltersProps> = ({
       <div className="w-px h-8 bg-border hidden sm:block" />
 
       {/* Date Range */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         <span className="text-sm font-medium text-muted-foreground">
           Date Range:
         </span>
