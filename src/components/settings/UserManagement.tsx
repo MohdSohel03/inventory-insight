@@ -200,6 +200,7 @@ export const UserManagement: React.FC = () => {
             <p className="text-sm">Users will appear here once they create a profile</p>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -306,6 +307,7 @@ export const UserManagement: React.FC = () => {
               ))}
             </TableBody>
           </Table>
+          </div>
         )}
       </CardContent>
     </Card>
