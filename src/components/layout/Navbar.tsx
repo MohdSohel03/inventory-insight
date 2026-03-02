@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Bell, User, Menu } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
@@ -20,6 +21,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ title, subtitle, onMenuToggle }) => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="h-16 bg-card border-b border-border px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
@@ -84,8 +86,8 @@ export const Navbar: React.FC<NavbarProps> = ({ title, subtitle, onMenuToggle })
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/settings')}>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/settings')}>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>
               Sign out
